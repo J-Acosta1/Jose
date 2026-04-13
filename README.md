@@ -1,4 +1,4 @@
-# Socket Connection Project
+# Jose# Socket Connection Project
 
 This project demonstrates a basic client-server communication system using Python sockets.
 
