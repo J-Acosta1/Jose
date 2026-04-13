@@ -1,3 +1,5 @@
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Jose-blue?logo=github)](https://github.com/J-Acosta1/Jose)
+
 # Jose# Socket Connection Project
 
 This project demonstrates a basic client-server communication system using Python sockets.
