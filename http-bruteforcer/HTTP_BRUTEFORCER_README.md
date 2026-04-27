@@ -1,4 +1,4 @@
-# HTTP Directory Bruteforcer
+# HTTP Directory Bruteforcer *********OLD VERSION**************
 
 A simple Python script for discovering hidden directories on web servers during penetration testing.
 
