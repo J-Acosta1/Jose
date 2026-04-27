@@ -1,0 +1,9 @@
+admin
+backup
+detectme
+test
+images
+secret
+uploads
+config
+login
