@@ -1,77 +1,71 @@
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Jose-blue?logo=github)](https://github.com/J-Acosta1/Jose)
+# HTTP Directory Bruteforcer
 
-# Jose
+A multithreaded HTTP directory bruteforcer for penetration testing and web application discovery.
 
-This repository contains various Python scripts for networking and penetration testing.
+## Overview
 
-## Socket Connection Project
+This tool scans a target web server using a directory wordlist and reports:
+- discovered directories (`200 OK`)
+- forbidden paths (`403`)
+- redirects (`301` / `302`)
+- request errors and timeouts
 
-This project demonstrates a basic client-server communication system using Python sockets.
+It includes:
+- colored console output
+- a progress bar
+- threaded scanning for faster enumeration
+- log file output
+- elapsed scan timing and summary
 
-### Files
+## Files
 
-- `server.py`: The server script that listens for connections and handles client requests.
-- `client.py`: The client script that connects to the server and sends/receives messages.
+- `http_bruteforcer.py`: Main bruteforcing script
+- `common_dirs.txt`: Example directory wordlist
+- `requirements.txt`: Python dependencies
 
-### Usage
+## Installation
 
-1. Run the server first:
-   ```
-   python server.py
-   ```
+Install dependencies:
 
-2. In another terminal, run the client:
-   ```
-   python client.py
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-The client will send a message to the server, and the server will respond.
-
-### Requirements
-
-- Python 3.x (socket module is built-in)
-
-### Notes
-
-- The server listens on localhost:12345.
-- This is a simple example for educational purposes.
-- For production use, consider security implications and proper error handling.
-
-## HTTP Directory Bruteforcer
-
-A penetration testing tool for discovering hidden directories on web servers.
-
-### Files
-
-- `http_bruteforcer.py`: The main bruteforcing script
-- `HTTP_BRUTEFORCER_README.md`: Detailed documentation for the bruteforcer
-- `common_dirs.txt`: Sample wordlist of common directory names
-
-### Usage
+## Usage
 
 ```bash
 python http_bruteforcer.py <target_url> <wordlist_file>
 ```
 
 Example:
+
 ```bash
 python http_bruteforcer.py http://example.com common_dirs.txt
 ```
 
-### Requirements
+## Options
 
-- Python 3.x
-- `requests`
-- `tqdm`
-- `colorama`
+- `-t`, `--threads`: number of worker threads (default: 10)
+- `-T`, `--timeout`: request timeout in seconds (default: 5.0)
+- `-d`, `--delay`: delay between requests in seconds (default: 0.1)
+- `-o`, `--output`: set a custom log file path
 
-Install dependencies with:
+Example with options:
+
 ```bash
-pip install -r requirements.txt
+python http_bruteforcer.py http://example.com common_dirs.txt -t 20 -T 3 -d 0.05 -o scan_results.log
 ```
 
-### Important Notes
+## Output
 
-- **Use only on systems you have explicit permission to test**
-- This tool is for educational and authorized penetration testing purposes only
-- Be aware of legal implications and terms of service
+The script prints scan progress and status messages to the console, and writes details to a log file. At the end of the run it shows:
+- total requests tested
+- directories found
+- elapsed time
+- log file path
+
+## Important Notes
+
+- Use this tool only on systems where you have explicit permission to test.
+- Unauthorized scanning is illegal and unethical.
+- This script is for educational and authorized penetration testing use only.
