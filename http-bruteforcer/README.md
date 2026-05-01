@@ -1,58 +1,94 @@
-# HTTP Brute Forcer
+# HTTP Directory Bruteforcer
 
-A Python-based HTTP authentication brute force tool for testing and security research.
+A multithreaded HTTP directory bruteforcer for penetration testing and web application discovery.
 
-## Features
+## Overview
 
-- Brute force HTTP Basic Authentication
-- Customizable wordlist support
-- Efficient multi-threaded requests
-- Detailed logging and reporting
-- Progress tracking
+This tool scans a target web server using a directory wordlist and reports:
+- discovered directories (`200 OK`)
+- forbidden paths (`403`)
+- redirects (`301` / `302`)
+- request errors and timeouts
 
-## Requirements
+It includes:
+- colored console output
+- a progress bar
+- threaded scanning for faster enumeration
+- optional User-Agent customization and random rotation
+- optional proxy support and proxy file rotation
+- optional delay with jitter and stealth mode
+- log file output
+- elapsed scan timing and summary
 
-- Python 3.6+
-- Dependencies listed in `requirements.txt`
+## Files
+
+- `http_bruteforcer.py`: Main bruteforcing script
+- `common_dirs.txt`: Example directory wordlist
+- `requirements.txt`: Python dependencies
 
 ## Installation
 
-1. Clone or download this repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
 ```bash
-python http_bruteforcer.py --url <target_url> --wordlist <wordlist_file>
+python http_bruteforcer.py <target_url> <wordlist_file>
 ```
 
-### Arguments
-
-- `--url`: Target URL to brute force (required)
-- `--wordlist`: Path to wordlist file (required)
-- `--threads`: Number of threads (default: 5)
-- `--timeout`: Request timeout in seconds (default: 5)
-
-### Example
+Example:
 
 ```bash
-python http_bruteforcer.py --url http://target.com --wordlist wordlist.txt --threads 10
+python http_bruteforcer.py http://example.com common_dirs.txt
 ```
 
-## Wordlist Format
+## Options
 
-The wordlist file should contain one credential per line in the format:
+- `-t`, `--threads`: number of worker threads (default: 10)
+- `-T`, `--timeout`: request timeout in seconds (default: 10.0)
+- `-d`, `--delay`: base delay between requests in seconds (default: 0.1)
+- `-j`, `--jitter`: additional random delay added to each request (default: 0.0)
+- `-u`, `--user-agent`: custom User-Agent header for all requests
+- `-r`, `--random-user-agent`: rotate User-Agent values randomly from a built-in list
+- `--proxy`: HTTP/HTTPS proxy URL to use for requests
+- `--proxy-file`: file containing one proxy URL per line
+- `--stealth`: enable stealth mode with quieter reporting and slower behavior
+- `-o`, `--output`: set a custom log file path
+
+Example with options:
+
+```bash
+python http_bruteforcer.py http://example.com common_dirs.txt -t 20 -T 5 -d 0.05 -j 0.1 -r --proxy http://127.0.0.1:8080 --stealth -o scan_results.log
 ```
-username:password
+
+## Examples
+
+Use a single proxy for all requests:
+
+```bash
+python http_bruteforcer.py http://example.com common_dirs.txt --proxy http://127.0.0.1:8080
 ```
 
-## Disclaimer
+Use a proxy list and enable stealth mode:
 
-This tool is for authorized security testing and educational purposes only. Unauthorized access to computer systems is illegal. Always obtain proper authorization before conducting penetration testing.
+```bash
+python http_bruteforcer.py http://example.com common_dirs.txt --proxy-file proxies.txt --stealth -d 0.2 -j 0.15
+```
 
-## License
+## Output
 
-MIT License
+The script prints scan progress and status messages to the console, and writes details to a log file. At the end of the run it shows:
+- total requests tested
+- directories found
+- elapsed time
+- log file path
+
+## Important Notes
+
+- Use this tool only on systems where you have explicit permission to test.
+- Unauthorized scanning is illegal and unethical.
+- This script is for educational and authorized penetration testing use only.
